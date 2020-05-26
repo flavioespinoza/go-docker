@@ -1,1 +1,1 @@
-docker-compose -f nginx-proxy-compose.yaml up -d --remove-orphans
+docker-compose -f nginx-proxy-compose.yaml up -d
