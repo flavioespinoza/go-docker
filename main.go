@@ -2,16 +2,27 @@ package main
 
 import (
     "fmt"
-    "net/http"
-
     "github.com/gorilla/mux"
+    "log"
+    "net/http"
+    "os"
+    "text/template"
 )
+
+var tpl *template.Template
+
+func init() {
+    tpl = template.Must(template.ParseGlob("templates/*.gohtml"))
+}
 
 func main() {
     r := mux.NewRouter()
 
     r.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-        fmt.Fprintf(w, "<h1>This is the homepage. Try /hello and /hello/YOUR_NAME\n</h1>")
+        err := tpl.ExecuteTemplate(os.Stdout, "index.gohtml", 667)
+        if err != nil {
+            log.Fatalln(err)
+        }
     })
 
     r.HandleFunc("/hello", func(w http.ResponseWriter, r *http.Request) {
