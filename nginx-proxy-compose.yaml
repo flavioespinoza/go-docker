@@ -2,8 +2,8 @@ version: '2'
 
 services:
   nginx-proxy:
-    restart: always
     container_name: nginx_proxy
+    restart: always
     image: jwilder/nginx-proxy
     ports:
       - "80:80"
@@ -15,6 +15,7 @@ services:
       - "/etc/nginx/certs"
 
   letsencrypt-nginx-proxy-companion:
+    container_name: nginx_proxy_letsencrypt
     restart: always
     image: jrcs/letsencrypt-nginx-proxy-companion
     volumes:
