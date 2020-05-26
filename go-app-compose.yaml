@@ -4,7 +4,7 @@ services:
     restart: always
     build:
       dockerfile: Dockerfile
-      context: ""
+      context: .
     environment:
       - VIRTUAL_HOST=flavioespinoza.com
       - LETSENCRYPT_HOST=flavioespinoza.com
