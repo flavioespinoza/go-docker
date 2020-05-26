@@ -1,1 +1,1 @@
-docker-compose -f scripts/nginx-proxy-compose.yaml up -d
+docker-compose -f nginx-proxy-compose.yaml up -d
