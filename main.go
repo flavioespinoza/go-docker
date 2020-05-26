@@ -16,7 +16,7 @@ func main() {
     mux.HandleFunc("/", foo)
     mux.HandleFunc("/bar/", bar)
     mux.HandleFunc("/about", about)
-    http.ListenAndServe(":8080", mux)
+    http.ListenAndServe(":80", mux)
 }
 
 func foo(w http.ResponseWriter, req *http.Request) {
