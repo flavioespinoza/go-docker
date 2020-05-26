@@ -1,0 +1,13 @@
+# environment variables
+.env
+
+# local-${file_name}, local${file_name}, local-${dir_name}, local${dir_name}
+local*
+
+# temp-${file_name}, temp${file_name}, temp-${dir_name}, temp${dir_name}
+temp*
+
+# npm modules
+/node_modules
+
+
