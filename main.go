@@ -1,43 +1,29 @@
 package main
 
 import (
-    "html/template"
+    "fmt"
     "net/http"
+
+    "github.com/gorilla/mux"
 )
 
-var tpl *template.Template
-
-func init() {
-    tpl = template.Must(template.ParseGlob("templates/*.gohtml"))
-}
-
 func main() {
-    mux := http.NewServeMux()
-    mux.HandleFunc("/", foo)
-    mux.HandleFunc("/bar/", bar)
-    mux.HandleFunc("/about", about)
-    http.ListenAndServe(":80", mux)
-}
+    r := mux.NewRouter()
 
-func foo(w http.ResponseWriter, req *http.Request) {
-    tpl.ExecuteTemplate(w, "foo.gohtml", req.Method)
-}
+    r.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+        fmt.Fprintf(w, "<h1>This is the homepage. Try /hello and /hello/YOUR_NAME\n</h1>")
+    })
 
-func bar(w http.ResponseWriter, req *http.Request) {
-    tpl.ExecuteTemplate(w, "bar.gohtml", req.URL.Path)
-}
+    r.HandleFunc("/hello", func(w http.ResponseWriter, r *http.Request) {
+        fmt.Fprintf(w, "<h1>Hello from Docker!\n</h1>")
+    })
 
-func about(w http.ResponseWriter, req *http.Request) {
+    r.HandleFunc("/hello/{name}", func(w http.ResponseWriter, r *http.Request) {
+        vars := mux.Vars(r)
+        title := vars["name"]
 
-    d := struct {
-        FName    string
-        LName    string
-        RawQuery string
-    }{
-        "James",
-        "Bond",
-        req.URL.RawQuery,
-    }
+        fmt.Fprintf(w, "<h1>Hello, %s!\n</h1>", title)
+    })
 
-    tpl.ExecuteTemplate(w, "about.gohtml", d)
+    http.ListenAndServe(":80", r)
 }
